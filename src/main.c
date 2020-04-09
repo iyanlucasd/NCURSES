@@ -29,6 +29,7 @@ int main(void)
     // comando pra printar na box
     // variaveis janela, linha do texto, coluna do texto, print
     mvwprintw(win, 1, 1, "Hello World!");
+    refresh();
 
     //quando o usuario digitar, pega o char e retorna o valor hex
     //quando nao especificado, vai pra posicao 0,0 (y, x) da janela
