@@ -1,40 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <curses.h>
-#include <string.h>
+#include <ncurses.h>
+#include "menu.h"
+#include "menuExercicios.c"
+#include "ex1.h"
+#include "ex2.h"
+#include "ex3.h"
+#include "ex4.h"
+#include "ex5.h"
 
-// define o valor da tecla enter
-#define ENTER 10
-int main(void)
+int main()
 {
-    // inicialisa a tela (comando inicial)
+    setlocale(LC_ALL, "");
+    // inicia o ncurses
     initscr();
-    // declarar as variaveis
-    int altura, largura, inic_y, inic_x;
-    // altura da janela
-    altura = 10;
-    // largura da janela
-    largura = 20;
-    // posicao inicial das janelas
-    inic_y = inic_x = 10;
+    curs_set(0);
+    //abilita o uso dos #defines do teclado, possibilita, por exemplo a referência da tecla F1 por KEY_F1
+    keypad(stdscr, TRUE); 
+    // inicia suporte a cores
+    start_color();
+    // cria um par de cores cor do foreground branco e
+    // background azul
+    init_pair(BG, COLOR_WHITE, COLOR_BLUE);
 
-    // comando pra criar uma nova janela
-    WINDOW *win = newwin(altura, largura, inic_y, inic_x);
-    // comando pra atualizar o monitor
+    // define a cor do background
+    bkgd(COLOR_PAIR(BG));
+    
     refresh();
 
-    // comando cria uma box
-    // variaveis janela(ponteiro), posicao inicial e posicao final
-    box(win, inic_y, inic_x);
-    // comando pra printar na box
-    // variaveis janela, linha do texto, coluna do texto, print
-    mvwprintw(win, 1, 1, "Hello World!");
-
-    //quando o usuario digitar, pega o char e retorna o valor hex
-    //quando nao especificado, vai pra posicao 0,0 (y, x) da janela
-    int c = getchar();
-
-    // comando de fechar a janela, termina o programa
+    int opt;
+    do
+    {
+        opt = menu();
+        direct(opt);
+    } while (opt != 5);
+    
+    // fecha ncurses
     endwin();
     return 0;
 }
